@@ -8,6 +8,7 @@ Java practice programs — notes and examples written while learning the languag
 | --- | --- | --- |
 | `java-1st-program/` | `Demo.java` | First program — printing to console with `System.out.println` |
 | `Vaiables/` | `Var.java` | Primitive data types — `byte`, `short`, `int`, `long`, `float`, `double`, `char`, `boolean` |
+| `Diff-number-sys-rep/` | `Diff_reprsentaion.java` | Number system literals — binary (`0b`), octal (`0`), hexadecimal (`0X`), underscore separators, scientific notation |
 
 ## Requirements
 
