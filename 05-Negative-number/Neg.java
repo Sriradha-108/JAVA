@@ -1,0 +1,6 @@
+public class Neg {
+    public static void main(String[] args) {
+        float f= -0.7f;
+        System.out.println("Negative value --> " + f);
+    }
+}    
