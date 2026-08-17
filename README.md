@@ -22,8 +22,8 @@ Folders are numbered in the order the topics were learned.
 | `09-operator/4-Logical/` | `Logical.java` | Logical operators — short-circuit `&&` / `\|\|` versus non-short-circuit `&` / `\|` |
 | `09-operator/5-Assignment/` | `Assign.java` | Assignment and comparison of assigned values |
 | `Conditional-Statement/1-Selection/` | `Selection.java` | Selection statements — `if`, `if-else`, nested `if`, `if-else-if` ladder, classic `switch` with `break`, and arrow-label `switch` (JDK 14+) |
-| `Conditional-Statement/2-Iteration/` | `Iteration.java` | Iteration statements — `for`, `while`, `do-while`, enhanced `for` *(empty — work in progress)* |
-| `Conditional-Statement/3-Jump/` | `Jump.java` | Jump statements — `break`, `continue`, `return`, labelled jumps *(empty — work in progress)* |
+| `Conditional-Statement/2-Iteration/` | `Iteration.java` | Iteration statements — `while`, `do-while`, `for` (infinite, missing-init, comma-separated forms), nested loops, star patterns, and labelled `break`/`continue` |
+| `Conditional-Statement/3-Jump/` | `Jump.java` | Jump statements — `break` and `continue` in practice: prime-number check and printing odd numbers |
 
 ## Requirements
 
@@ -57,3 +57,4 @@ java Var.java
 - Some files keep alternative examples commented out, so uncomment a block to try that case.
 - `09-operator/3-Bitwise/bitwise operator.md` is a written reference for the bitwise operators — truth tables, shift behaviour, precedence, and common bit tricks.
 - `switch` accepts `byte`, `short`, `int`, `char`, enums, and — since JDK 7 — `String`. Duplicate case labels are not allowed.
+- A labelled `break` exits the labelled loop entirely, while a labelled `continue` jumps to the next iteration of the labelled loop — see `Iteration.java` for both.
