@@ -21,9 +21,12 @@ Folders are numbered in the order the topics were learned.
 | `09-operator/3-Bitwise/` | `Bitw.java`, `bitwise operator.md` | Bitwise operators — `&`, `\|`, `^`, `~`, `<<`, `>>`, `>>>`, with a full reference sheet in Markdown |
 | `09-operator/4-Logical/` | `Logical.java` | Logical operators — short-circuit `&&` / `\|\|` versus non-short-circuit `&` / `\|` |
 | `09-operator/5-Assignment/` | `Assign.java` | Assignment and comparison of assigned values |
-| `Conditional-Statement/1-Selection/` | `Selection.java` | Selection statements — `if`, `if-else`, nested `if`, `if-else-if` ladder, classic `switch` with `break`, and arrow-label `switch` (JDK 14+) |
-| `Conditional-Statement/2-Iteration/` | `Iteration.java` | Iteration statements — `while`, `do-while`, `for` (infinite, missing-init, comma-separated forms), nested loops, star patterns, and labelled `break`/`continue` |
-| `Conditional-Statement/3-Jump/` | `Jump.java` | Jump statements — `break` and `continue` in practice: prime-number check and printing odd numbers |
+| `10-Conditional-Statement/1-Selection/` | `Selection.java` | Selection statements — `if`, `if-else`, nested `if`, `if-else-if` ladder, classic `switch` with `break`, and arrow-label `switch` (JDK 14+) |
+| `10-Conditional-Statement/2-Iteration/` | `Iteration.java` | Iteration statements — `while`, `do-while`, `for` (infinite, missing-init, comma-separated forms), nested loops, star patterns, and labelled `break`/`continue` |
+| `10-Conditional-Statement/3-Jump/` | `Jump.java` | Jump statements — `break` and `continue` in practice: prime-number check and printing odd numbers |
+| `11-Arrays/1-D-Array/` | `Arrays.java` | One-dimensional arrays — both declaration forms (`int[] a` and `int a[]`), `new int[3]`, index assignment, `length`, and filling/printing with a `for` loop |
+| `11-Arrays/Multi-Dimension-Arrays/` | `MultiArrays.java` | Multi-dimensional arrays — rectangular `new int[3][3]`, jagged arrays (`new int[3][]` with rows of different lengths), array initialiser literals, and nested-loop traversal with `marks[row].length` |
+| `12-Strings/` | `Strings.java` | Strings — declaring `String` variables and concatenation with `+` |
 
 ## Requirements
 
@@ -58,3 +61,6 @@ java Var.java
 - `09-operator/3-Bitwise/bitwise operator.md` is a written reference for the bitwise operators — truth tables, shift behaviour, precedence, and common bit tricks.
 - `switch` accepts `byte`, `short`, `int`, `char`, enums, and — since JDK 7 — `String`. Duplicate case labels are not allowed.
 - A labelled `break` exits the labelled loop entirely, while a labelled `continue` jumps to the next iteration of the labelled loop — see `Iteration.java` for both.
+- Array elements get default values on creation — `0` for numeric types, `false` for `boolean`, `null` for references — so `new int[3]` already holds `0 0 0`.
+- Array `length` is a field, not a method: `a.length` with no brackets. For a 2-D array, `marks.length` is the number of rows and `marks[row].length` is the length of that row, which is what makes jagged arrays possible.
+- `11-Arrays/1-D-Array/Arrays.java` declares a class named `Arrays`, which shadows `java.util.Arrays` in that file — import the JDK class under a different name if both are ever needed together.
