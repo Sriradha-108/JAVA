@@ -33,6 +33,11 @@ Folders are numbered in the order the topics were learned.
 | `13-Function/4-scope-of-a-variable/` | `Scope.java` | Scope of a variable — a `static` field visible to the whole class versus locals that live only inside their own method |
 | `13-Function/5-Recursive/` | `Recursive.java` | Recursion — Fibonacci series with a `fib` method that calls itself, using `n == 0 \|\| n == 1` as the base case |
 | `14-Object-Oreiented-Programming/1-Class/` | `Class.java` | Classes and objects — a `Student` class with fields and methods, creating objects with `new`, setting fields through the reference, and calling `markAttendance()` and `print()` on each object |
+| `14-Object-Oreiented-Programming/2-Constructor/1-Basic/` | `Constructor.java` | What a constructor is for, and the default values instance variables start with — `0`, `0.0`, `false`, `null` — versus local variables, which have none |
+| `14-Object-Oreiented-Programming/2-Constructor/2-Default/` | `Default.java` | The default (no-argument) constructor — writing it out explicitly, and why it is optional when no other constructor exists |
+| `14-Object-Oreiented-Programming/2-Constructor/3-Parameterized/` | `Para.java` | Parameterized constructor — passing the field values to `new Student("Sriji", 14, 101, "Mohan")` instead of assigning them one at a time |
+| `14-Object-Oreiented-Programming/2-Constructor/4-overload/` | `Overload.java` | Constructor overloading — five `Student` constructors taking 0 to 4 arguments, each using `this.name = name` to separate the field from the parameter |
+| `14-Object-Oreiented-Programming/2-Constructor/5-Chaining/` | `Chaining.java` | Constructor chaining — each shorter constructor calls the next with `this(...)` until the 4-argument one does the assigning, so the defaults live in one place |
 
 ## Requirements
 
@@ -76,3 +81,8 @@ java Var.java
 - A class is the blueprint and an object is the instance built from it. `new Student()` allocates one object, and each object keeps its own copy of the fields, which is why `s1` and `s2` print different values.
 - Fields that are never assigned hold their defaults — `null` for `String`, `0` for `int` — the same defaults array elements get.
 - `Class.java` nests `Student` as a `static` nested class so both live in one file. A nested class must be `static` to be instantiated from `main` without an enclosing instance; the alternative is a separate top-level class in its own file.
+- A constructor has the same name as its class and no return type, not even `void`. It runs once, when `new` creates the object.
+- Instance variables get default values; local variables do not. `int x;` inside a method is a compile error if read before assignment — see the commented-out lines in `Constructor.java`.
+- The compiler supplies a no-argument constructor only when the class declares none. Once `Para.java` adds a parameterized one, `new Student()` stops compiling unless the no-argument version is written back in, which is what `Overload.java` does.
+- `this.name = name` assigns the parameter to the field of the same name. Without `this`, the nearer name wins and the line assigns the parameter to itself.
+- `this(...)` calls another constructor of the same class and must be the first statement in the constructor. `Chaining.java` funnels every constructor into the 4-argument one, so the `"unknown"` defaults are written once instead of five times.
