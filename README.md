@@ -32,6 +32,7 @@ Folders are numbered in the order the topics were learned.
 | `13-Function/3-Chaining-of-function/` | `Chain.java` | Chaining of functions — `fun1` calls `fun2` calls `fun3`, showing the order in which the call stack unwinds |
 | `13-Function/4-scope-of-a-variable/` | `Scope.java` | Scope of a variable — a `static` field visible to the whole class versus locals that live only inside their own method |
 | `13-Function/5-Recursive/` | `Recursive.java` | Recursion — Fibonacci series with a `fib` method that calls itself, using `n == 0 \|\| n == 1` as the base case |
+| `14-Object-Oreiented-Programming/1-Class/` | `Class.java` | Classes and objects — a `Student` class with fields and methods, creating objects with `new`, setting fields through the reference, and calling `markAttendance()` and `print()` on each object |
 
 ## Requirements
 
@@ -72,3 +73,6 @@ java Var.java
 - A `return;` at the end of `main` is optional — a `void` method returns on its own once the last statement runs.
 - Overloading is resolved from the parameter list only. Two methods that differ solely in return type do not compile, which is why `Fun.java` and `overloading.java` use different names (`fun` and `fun2`) for that pair.
 - Every recursive method needs a base case that returns without calling itself, or the calls never stop and the stack overflows. `fib` in `Recursive.java` returns `1` for both `n == 0` and `n == 1`, so the printed series starts `1 1 2 3 5`.
+- A class is the blueprint and an object is the instance built from it. `new Student()` allocates one object, and each object keeps its own copy of the fields, which is why `s1` and `s2` print different values.
+- Fields that are never assigned hold their defaults — `null` for `String`, `0` for `int` — the same defaults array elements get.
+- `Class.java` nests `Student` as a `static` nested class so both live in one file. A nested class must be `static` to be instantiated from `main` without an enclosing instance; the alternative is a separate top-level class in its own file.
