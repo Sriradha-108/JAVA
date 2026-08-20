@@ -38,6 +38,11 @@ Folders are numbered in the order the topics were learned.
 | `14-Object-Oreiented-Programming/2-Constructor/3-Parameterized/` | `Para.java` | Parameterized constructor — passing the field values to `new Student("Sriji", 14, 101, "Mohan")` instead of assigning them one at a time |
 | `14-Object-Oreiented-Programming/2-Constructor/4-overload/` | `Overload.java` | Constructor overloading — five `Student` constructors taking 0 to 4 arguments, each using `this.name = name` to separate the field from the parameter |
 | `14-Object-Oreiented-Programming/2-Constructor/5-Chaining/` | `Chaining.java` | Constructor chaining — each shorter constructor calls the next with `this(...)` until the 4-argument one does the assigning, so the defaults live in one place |
+| `14-Object-Oreiented-Programming/3-Call-by-value/` | `Callval.java` | Call by value — `addTen(x, y)` changes only its own copies, so `x` and `y` in `main` still print `4,5` afterwards |
+| `14-Object-Oreiented-Programming/4-Call-by-reference/` | `Callref.java` | Passing an object — `addTen(r1)` writes through the reference to `r.x` and `r.y`, so the change is visible back in `main` |
+| `14-Object-Oreiented-Programming/5-Static-Keyword/` | `Static.java` | The `static` keyword — `college` and `grade` shared by every `Student` and reached through the class name, versus per-object fields like `name` and `age` |
+| `14-Object-Oreiented-Programming/6-Final-Keyword/` | `Final.java` | The `final` keyword — `static final double PI = 3.14` as a class constant, a blank `final` local assigned once, and commented-out notes on assigning a `final` field from a constructor or a static block |
+| `14-Object-Oreiented-Programming/7-String[] args/` | `StringArgsDemo.java` | Command-line arguments — reading `args.length` and looping over `args[i]` to print each value passed after the class name |
 
 ## Requirements
 
@@ -65,6 +70,14 @@ With JDK 11+ a single-file program can be run directly, without compiling first:
 java Var.java
 ```
 
+A program that reads `String[] args` takes its values after the class name:
+
+```bash
+cd "14-Object-Oreiented-Programming/7-String[] args"
+javac StringArgsDemo.java
+java StringArgsDemo input.txt output.txt
+```
+
 ## Notes
 
 - Compiled `.class` files are build output and are excluded from the repository via `.gitignore`.
@@ -86,3 +99,8 @@ java Var.java
 - The compiler supplies a no-argument constructor only when the class declares none. Once `Para.java` adds a parameterized one, `new Student()` stops compiling unless the no-argument version is written back in, which is what `Overload.java` does.
 - `this.name = name` assigns the parameter to the field of the same name. Without `this`, the nearer name wins and the line assigns the parameter to itself.
 - `this(...)` calls another constructor of the same class and must be the first statement in the constructor. `Chaining.java` funnels every constructor into the 4-argument one, so the `"unknown"` defaults are written once instead of five times.
+- Java is always call by value. For a primitive the copied value is the number itself, so `Callval.java` cannot change `x` and `y` in `main`. For an object the copied value is the reference, so `Callref.java` reaches the same object and its edits stick — reassigning `r` itself inside the method would still change nothing in `main`.
+- A `static` field belongs to the class, not to any object: one copy shared by all instances, reached as `Student.college`. A `static` method can only touch `static` members directly, which is why `main` is `static` — the JVM calls it before any object exists.
+- `final` means assign once. A `final` local can be declared without a value and assigned later, as long as that happens exactly once before it is read — that is why `x` in `Final.java` compiles. A `final` instance field must be set in its declaration or in every constructor; a `static final` field must be set in its declaration or in a static block, since no constructor runs for it.
+- `String[] args` holds whatever is typed after the class name — `java StringArgsDemo input.txt output.txt` makes `args.length` 2. The array is empty, never `null`, when no arguments are passed, and every element is a `String` even if it looks like a number.
+- `14-Object-Oreiented-Programming/7-String[] args/` has spaces and brackets in its name, so quote it when changing into it: `cd "7-String[] args"`.
