@@ -45,6 +45,9 @@ Folders are numbered in the order the topics were learned.
 | `14-Object-Oreiented-Programming/7-String[] args/` | `StringArgsDemo.java` | Command-line arguments — reading `args.length` and looping over `args[i]` to print each value passed after the class name |
 | `15-Encapsulation/` | `Encap.java` | Encapsulation — `private` fields reached only through public methods: a `BankAccount` whose `balance` changes via `deposit()` / `withdraw()` and is read with `getbalance()`, and a `Student` read and renamed with `getName()` / `setName()` |
 | `Package-16/` | `Pack2.java`, `college/Student.java`, `school/Student.java` | Packages — two classes both named `Student`, one in package `college` and one in package `school`, told apart in `Pack2.java` by their fully qualified names, with the `import` forms kept as comments |
+| `17-Inheritance/1-Simple/` | `Inher.java` | Single inheritance — `EngineerStudent extends Student`, so one object can call both the inherited `markAttendance()` and its own `attendLab()` |
+| `17-Inheritance/2-Multi-level/` | `Multi.java` | Multi-level inheritance — a chain of `Student` → `EngineerStudent` → `CSEEngineerStudent`, where the last class collects the methods of both classes above it |
+| `17-Inheritance/3-Hierarchical/` | `Hier.java` | Hierarchical inheritance — `EngineerStudent` and `CSEEngineerStudent` both extend `Student` as siblings, so `attendLab()` is no longer reachable from a `CSEEngineerStudent` |
 
 ## Requirements
 
@@ -121,3 +124,9 @@ java Pack2
 - Two classes can share a simple name as long as they are in different packages. Only one of them can be imported into a file, which is why `Pack2.java` leaves both imports commented out and writes `college.Student` and `school.Student` in full instead.
 - A file may hold only one `public` class, and it must match the file name. `college/Student.java` also declares `Teacher` without `public`, so `Teacher` is visible inside package `college` only.
 - `Package-16/Pack.java` is an empty file kept as a placeholder — `javac` accepts it and produces no `.class`.
+- `extends` gives the subclass every field and method of the superclass without repeating them. The parent stays usable on its own, which is why each of the three files still creates a plain `Student` next to the subclass object.
+- Inheritance runs one way only. `EngineerStudent` can call `markAttendance()`, but a `Student` reference cannot call `attendLab()` — the parent knows nothing about what its children add.
+- Multi-level means each class extends the one before it. `CSEEngineerStudent extends EngineerStudent extends Student` in `Multi.java`, so its object reaches `attendCSELab()`, `attendLab()`, and `markAttendance()` alike.
+- Hierarchical means several classes extend the same parent. In `Hier.java` both `EngineerStudent` and `CSEEngineerStudent` extend `Student` directly, so they are siblings and share nothing with each other — that is why `es.attendLab()` is commented out there but works in `Multi.java`, where the same call sits in a chain.
+- The three files each redeclare their own `Student`, `EngineerStudent`, and `CSEEngineerStudent` so every folder compiles on its own. Compile each one from its own folder; the class names would collide otherwise.
+- Java has no multiple inheritance of classes — a class may name only one superclass in `extends`. Several classes sharing one parent, as in `Hier.java`, is hierarchical inheritance, not multiple.
