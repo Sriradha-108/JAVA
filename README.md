@@ -43,6 +43,8 @@ Folders are numbered in the order the topics were learned.
 | `14-Object-Oreiented-Programming/5-Static-Keyword/` | `Static.java` | The `static` keyword — `college` and `grade` shared by every `Student` and reached through the class name, versus per-object fields like `name` and `age` |
 | `14-Object-Oreiented-Programming/6-Final-Keyword/` | `Final.java` | The `final` keyword — `static final double PI = 3.14` as a class constant, a blank `final` local assigned once, and commented-out notes on assigning a `final` field from a constructor or a static block |
 | `14-Object-Oreiented-Programming/7-String[] args/` | `StringArgsDemo.java` | Command-line arguments — reading `args.length` and looping over `args[i]` to print each value passed after the class name |
+| `15-Encapsulation/` | `Encap.java` | Encapsulation — `private` fields reached only through public methods: a `BankAccount` whose `balance` changes via `deposit()` / `withdraw()` and is read with `getbalance()`, and a `Student` read and renamed with `getName()` / `setName()` |
+| `Package-16/` | `Pack2.java`, `college/Student.java`, `school/Student.java` | Packages — two classes both named `Student`, one in package `college` and one in package `school`, told apart in `Pack2.java` by their fully qualified names, with the `import` forms kept as comments |
 
 ## Requirements
 
@@ -78,6 +80,14 @@ javac StringArgsDemo.java
 java StringArgsDemo input.txt output.txt
 ```
 
+A program that uses packages is compiled and run from the folder that holds the package directories, not from inside them:
+
+```bash
+cd Package-16
+javac college/Student.java school/Student.java Pack2.java
+java Pack2
+```
+
 ## Notes
 
 - Compiled `.class` files are build output and are excluded from the repository via `.gitignore`.
@@ -104,3 +114,10 @@ java StringArgsDemo input.txt output.txt
 - `final` means assign once. A `final` local can be declared without a value and assigned later, as long as that happens exactly once before it is read — that is why `x` in `Final.java` compiles. A `final` instance field must be set in its declaration or in every constructor; a `static final` field must be set in its declaration or in a static block, since no constructor runs for it.
 - `String[] args` holds whatever is typed after the class name — `java StringArgsDemo input.txt output.txt` makes `args.length` 2. The array is empty, never `null`, when no arguments are passed, and every element is a `String` even if it looks like a number.
 - `14-Object-Oreiented-Programming/7-String[] args/` has spaces and brackets in its name, so quote it when changing into it: `cd "7-String[] args"`.
+- Encapsulation is the fields being `private` and the access going through public methods. `BankAccount.balance` cannot be set from `main` — the commented-out `ba.balance = 10000.00;` in `Encap.java` does not compile — so the only way in is `deposit()` and `withdraw()`, which is where a rule like "no negative deposit" would go.
+- A field needs a getter only if it should be readable and a setter only if it should be writable. `Student` in `Encap.java` exposes `getName()` and `setName()` but leaves `age` and `rollNo` with neither, so they can be set once by the constructor and never changed afterwards.
+- A `package` statement must be the first line of the file, and the folder name has to match the package name — `package college;` only works from a file inside a `college/` folder.
+- The package folders sit under `Package-16/`, so `javac` and `java` are run from `Package-16/` with the path spelled out (`javac college/Student.java`). Running them from inside `college/` puts the `.class` file where the package name no longer matches, and `java` then cannot find the class.
+- Two classes can share a simple name as long as they are in different packages. Only one of them can be imported into a file, which is why `Pack2.java` leaves both imports commented out and writes `college.Student` and `school.Student` in full instead.
+- A file may hold only one `public` class, and it must match the file name. `college/Student.java` also declares `Teacher` without `public`, so `Teacher` is visible inside package `college` only.
+- `Package-16/Pack.java` is an empty file kept as a placeholder — `javac` accepts it and produces no `.class`.
