@@ -48,6 +48,7 @@ Folders are numbered in the order the topics were learned.
 | `17-Inheritance/1-Simple/` | `Inher.java` | Single inheritance — `EngineerStudent extends Student`, so one object can call both the inherited `markAttendance()` and its own `attendLab()` |
 | `17-Inheritance/2-Multi-level/` | `Multi.java` | Multi-level inheritance — a chain of `Student` → `EngineerStudent` → `CSEEngineerStudent`, where the last class collects the methods of both classes above it |
 | `17-Inheritance/3-Hierarchical/` | `Hier.java` | Hierarchical inheritance — `EngineerStudent` and `CSEEngineerStudent` both extend `Student` as siblings, so `attendLab()` is no longer reachable from a `CSEEngineerStudent` |
+| `17-Inheritance/4-Super/` | `Super.java`, `Super2.java` | The `super` keyword — `EngStudent` overrides `print()` and calls `super.print()` for the parent's half of the output, and `Super2.java` adds `super(name, age, rn)` so the parent constructor sets the inherited fields |
 
 ## Requirements
 
@@ -130,3 +131,9 @@ java Pack2
 - Hierarchical means several classes extend the same parent. In `Hier.java` both `EngineerStudent` and `CSEEngineerStudent` extend `Student` directly, so they are siblings and share nothing with each other — that is why `es.attendLab()` is commented out there but works in `Multi.java`, where the same call sits in a chain.
 - The three files each redeclare their own `Student`, `EngineerStudent`, and `CSEEngineerStudent` so every folder compiles on its own. Compile each one from its own folder; the class names would collide otherwise.
 - Java has no multiple inheritance of classes — a class may name only one superclass in `extends`. Several classes sharing one parent, as in `Hier.java`, is hierarchical inheritance, not multiple.
+- A subclass method with the same name and parameters as the parent's overrides it. `EngStudent.print()` is what runs for an `EngStudent` object; the parent version is reachable only through `super.print()`, which is how both files print the `Student` line and the college line from one call.
+- `super` reaches the parent's copy of something the subclass has redeclared. `rn` exists in both `Student` and `EngStudent`, so inside `EngStudent` the plain name `rn` means its own field and `super.rn` means the parent's — the commented-out line in `print()` spells that out.
+- Shadowing a field is not overriding it. Both `rn` fields exist at once in the same object, so `Super.java` prints `Sriji,14,0` — `Student.print()` reads the parent's `rn`, which nothing assigned.
+- `super(...)` calls a parent constructor and must be the first statement in the subclass constructor, the same rule `this(...)` follows. `EngStudent` in `Super2.java` hands `name`, `age`, and `rn` up to `Student` and keeps only `college` for itself, so the parent's `rn` is set to `101` and the output becomes `Sriji,14,101`.
+- A constructor with no explicit `super(...)` gets an implicit call to the parent's no-argument constructor, so the parent must still have one. `Super2.java` writes `Student() {}` back in for that reason, after adding the parameterized constructor.
+- `Super.java` and `Super2.java` sit in the same folder and both declare `Student` and `EngStudent`, so compile them one at a time. `javac Super.java Super2.java` in a single command is a duplicate-class error, and compiling one after the other overwrites the shared `.class` files.
