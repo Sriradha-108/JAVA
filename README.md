@@ -49,6 +49,9 @@ Folders are numbered in the order the topics were learned.
 | `17-Inheritance/2-Multi-level/` | `Multi.java` | Multi-level inheritance — a chain of `Student` → `EngineerStudent` → `CSEEngineerStudent`, where the last class collects the methods of both classes above it |
 | `17-Inheritance/3-Hierarchical/` | `Hier.java` | Hierarchical inheritance — `EngineerStudent` and `CSEEngineerStudent` both extend `Student` as siblings, so `attendLab()` is no longer reachable from a `CSEEngineerStudent` |
 | `17-Inheritance/4-Super/` | `Super.java`, `Super2.java` | The `super` keyword — `EngStudent` overrides `print()` and calls `super.print()` for the parent's half of the output, and `Super2.java` adds `super(name, age, rn)` so the parent constructor sets the inherited fields |
+| `18-Abstraction/BasicAbs/` | `Abs.java` | Abstraction with an abstract class — `Car` gives `start()` a body and leaves `accelerate()` and `brake()` abstract, so `FuelCar` and `ElectricCar` must override them |
+| `18-Abstraction/Interface/` | `Inter.java` | Abstraction with an interface — `Car` declares `start()`, `accelerate()`, and `brake()` with no bodies, and `FuelCar` / `ElectricCar` `implements` all three |
+| `19-Polymorphism/` | `Poly.java` | Runtime polymorphism — `A a = new B()` calls `B.getX()`, with commented-out notes on why `static`, `private`, `final` methods and fields are not polymorphic |
 
 ## Requirements
 
@@ -137,3 +140,12 @@ java Pack2
 - `super(...)` calls a parent constructor and must be the first statement in the subclass constructor, the same rule `this(...)` follows. `EngStudent` in `Super2.java` hands `name`, `age`, and `rn` up to `Student` and keeps only `college` for itself, so the parent's `rn` is set to `101` and the output becomes `Sriji,14,101`.
 - A constructor with no explicit `super(...)` gets an implicit call to the parent's no-argument constructor, so the parent must still have one. `Super2.java` writes `Student() {}` back in for that reason, after adding the parameterized constructor.
 - `Super.java` and `Super2.java` sit in the same folder and both declare `Student` and `EngStudent`, so compile them one at a time. `javac Super.java Super2.java` in a single command is a duplicate-class error, and compiling one after the other overwrites the shared `.class` files.
+- Abstraction is showing what an object does and hiding how it does it. Java offers two ways, one folder each: an abstract class in `18-Abstraction/BasicAbs/` and an interface in `18-Abstraction/Interface/`.
+- An `abstract` class cannot be instantiated — `new Car()` does not compile. It can still hold ordinary methods with bodies, which is why `Car.start()` in `Abs.java` prints for both subclasses without either one writing it out.
+- A class that extends an abstract class must override every `abstract` method or be declared `abstract` itself. `FuelCar` and `ElectricCar` implement `accelerate()` and `brake()` for that reason.
+- An interface declares methods without bodies, and a class picks it up with `implements` instead of `extends`. Its methods are implicitly `public`, so the overrides in `Inter.java` must say `public` — dropping it is a weaker-access compile error.
+- Choose an abstract class when the subclasses share state or partly-written behaviour, and an interface when only the contract is shared. A class extends one class but may implement any number of interfaces, which is how Java gets multiple inheritance of type.
+- `Abs.java` and `Inter.java` both declare `Car`, `FuelCar`, and `ElectricCar`, so they live in separate folders and are compiled from their own folder. Together in one folder they would be a duplicate-class error.
+- Polymorphism is one reference type behaving as several. `A a = new B()` compiles against `A` but dispatches at runtime to `B`, so `a.getX()` prints `20` — the object decides, not the reference.
+- Only instance methods are polymorphic. Fields are resolved from the reference type, so the commented-out `a.x` in `Poly.java` would print `10` even though the object is a `B` — that is shadowing, not overriding.
+- `static`, `private`, and `final` methods cannot be overridden — `static` belongs to the class, `private` is invisible to the subclass, and `final` forbids it. A `final` class cannot be extended at all.
