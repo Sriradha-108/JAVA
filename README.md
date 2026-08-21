@@ -52,6 +52,10 @@ Folders are numbered in the order the topics were learned.
 | `18-Abstraction/BasicAbs/` | `Abs.java` | Abstraction with an abstract class — `Car` gives `start()` a body and leaves `accelerate()` and `brake()` abstract, so `FuelCar` and `ElectricCar` must override them |
 | `18-Abstraction/Interface/` | `Inter.java` | Abstraction with an interface — `Car` declares `start()`, `accelerate()`, and `brake()` with no bodies, and `FuelCar` / `ElectricCar` `implements` all three |
 | `19-Polymorphism/` | `Poly.java` | Runtime polymorphism — `A a = new B()` calls `B.getX()`, with commented-out notes on why `static`, `private`, `final` methods and fields are not polymorphic |
+| `20-AutoBoxing-AbstractClasses-Pojo/AutoBoxing/` | `Auto.java` | Autoboxing and unboxing — the three places the conversion happens (assignment, method call, arithmetic), with the live example left as `Integer x = null; int y = x;` to show the `NullPointerException` unboxing throws |
+| `20-AutoBoxing-AbstractClasses-Pojo/AbstractClasses/` | `Demo.java`, `Demo2.java` | `Demo.java` compares two `Integer` objects with `==`, `intValue()`, and `equals()`; `Demo2.java` is an abstract `Animal` with a constructor, an abstract `makesound()`, and a concrete `sleep()`, extended by `Dog` |
+| `20-AutoBoxing-AbstractClasses-Pojo/Pojos/` | `Ab.java`, `Pojos.java` | POJOs — `Ab.java` currently holds the file/class naming questions answered in `interview-questions/`, and `Pojos.java` is an empty placeholder |
+| `interview-questions/` | `01-public-class-and-file-name.md` | Written answers to interview questions, in tables — why one `public` class per file, why its name must match the file name, and how `javac` and the JVM each apply that rule |
 
 ## Requirements
 
@@ -149,3 +153,12 @@ java Pack2
 - Polymorphism is one reference type behaving as several. `A a = new B()` compiles against `A` but dispatches at runtime to `B`, so `a.getX()` prints `20` — the object decides, not the reference.
 - Only instance methods are polymorphic. Fields are resolved from the reference type, so the commented-out `a.x` in `Poly.java` would print `10` even though the object is a `B` — that is shadowing, not overriding.
 - `static`, `private`, and `final` methods cannot be overridden — `static` belongs to the class, `private` is invisible to the subclass, and `final` forbids it. A `final` class cannot be extended at all.
+- Autoboxing is the compiler converting a primitive to its wrapper (`int` → `Integer`) and unboxing is the way back. It happens in three places, listed at the bottom of `Auto.java`: assignments, method calls, and arithmetic — `int sum = a + b` with two `Integer` operands unboxes both, adds, and leaves a primitive.
+- Unboxing `null` throws a `NullPointerException`, which is the case `Auto.java` leaves uncommented. `Integer x = null; int y = x;` compiles cleanly and fails at run time, because the generated call is `x.intValue()` on a null reference.
+- `==` on wrappers compares references, not values. `Demo.java` uses `200`, which is outside the `Integer` cache, so `a == b` is `false` while `a.intValue() == b.intValue()` and `a.equals(b)` are both `true`. Values from `-128` to `127` come from a shared cache and would compare `true` with `==` — a difference that is exactly why `equals()` is the right tool.
+- `new Integer(20)` is deprecated since JDK 9 and removed in JDK 16. `Integer.valueOf(20)` is the replacement, and it is what a plain `Integer a = 20;` compiles to.
+- An abstract class can do everything a normal class can except be instantiated. `Animal` in `Demo2.java` has a constructor, a field, an abstract `makesound()`, and a concrete `sleep()`; `Dog` calls that constructor with `super(name)`.
+- The abstract-class questions answered in `Demo2.java`: it can have constructors, `static` members, `private` methods, and `final` methods, and it may declare no abstract method at all. It cannot be `final` — `abstract` needs a subclass and `final` forbids one, so the two together are a compile error.
+- An abstract class has a constructor even though no object of it is ever made. The constructor runs as part of building the subclass object, which is why `super(name)` in `Dog` is what sets `Animal.name`.
+- `Pojos.java` is an empty placeholder, the same as `Package-16/Pack.java` — `javac` accepts it and produces no `.class`.
+- `interview-questions/` holds written answers rather than runnable code, one Markdown file per topic. The first covers why a file may hold only one `public` class and why its name must match the file, including how `javac` and the JVM apply that rule at their own level.
